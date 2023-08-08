@@ -21,12 +21,36 @@ pipeline {
                 sh 'docker push koggiri97/testspring:0.1.0'
             }
         }
-        stage('SSH') {
-            steps {
-                sshPublisher(publishers: [sshPublisherDesc(configName: 'deploy_server', transfers: [sshTransfer(cleanRemote: false, excludes: '', execCommand: '''docker login -u koggiri97 -p @gudcks132 docker.io
-docker pull koggiri97/testspring:0.1.0
-docker ps -q --filter name=test_server| grep -q . && docker rm -f $(docker ps -aq --filter name=test_server)
-docker run -d --name test_server -p 5001:8080 koggiri97/testspring:0.1.0''', execTimeout: 120000, flatten: false, makeEmptyDirs: false, noDefaultExcludes: false, patternSeparator: '[, ]+', remoteDirectory: '', remoteDirectorySDF: false, removePrefix: '', sourceFiles: '')], usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: false)])
+        stage('SSH transfer') {
+            script {
+                sshPublisher(
+                    publishers: [
+                        sshPublisherDesc(
+                            configName: 'deploy_server',
+                            transfers: [
+                                sshTransfer(
+                                    cleanRemote: false, excludes: '',
+                                    execCommand: '''
+                                    docker login -u koggiri97 -p @gudcks132 docker.io
+                                    docker pull koggiri97/testspring:0.1.0
+                                    docker ps -q --filter name=test_server| grep -q . && docker rm -f $(docker ps -aq --filter name=test_server)
+                                    docker run -d --name test_server -p 5001:8080 koggiri97/testspring:0.1.0''',
+                                    execTimeout: 120000,
+                                    flatten: false,
+                                    makeEmptyDirs: false,
+                                    noDefaultExcludes: false,
+                                    patternSeparator: '[, ]+'
+                                    remoteDirectory: '',
+                                    remoteDirectorySDF: false, 
+                                    removePrefix: '',
+                                    sourceFiles: ''
+                                )
+                            ],
+                            usePromotionTimestamp: false,
+                            useWorkspaceInPromotion: false,
+                            verbose: false
+                        )
+                ])
             }
         }
     }
