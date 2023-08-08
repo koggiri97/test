@@ -19,10 +19,6 @@ class UserController {
     fun getUserList() : ResponseEntity<String> {
         return ResponseEntity.ok("성공")
     }
-
-    @PostMapping("/checking/list")
-    fun setUserList() : ResponseEntity<String> {
-        return ResponseEntity.ok("성공")
-    }
+    
     
 }
