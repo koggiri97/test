@@ -21,5 +21,19 @@ pipeline {
                 sh 'docker push koggiri97/testspring:0.1.0'
             }
         }
+        stage('Test') {
+            steps {
+                sshPublisher(publishers: [
+                  sshPublisherDesc(
+                      configName: 'deploy_server',
+                      transfers: [
+                        sshTransfer(
+                            execCommand: 'sudo mkdir /test'
+                        )
+                      ]
+                  )
+                ])
+            }
+        }
     }
 }
