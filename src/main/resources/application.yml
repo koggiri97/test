@@ -1,6 +1,6 @@
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://192.168.0.60:3307/MSATest
-    username: root
-    password: gudcks132
+    url: jdbc:mysql://ls-214389c7115ba4f9d94be4effbebda114a4629df.cljxyq6ahsjq.ap-northeast-2.rds.amazonaws.com:3306/MSATest
+    username: dbmasteruser
+    password: -7p:+[QW1ciK!NE,T&sLy71edUL$CQ~S
